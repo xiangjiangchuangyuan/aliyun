@@ -43,6 +43,8 @@ public abstract class AcsClient
 
 	public abstract String queryPipelineId();
 
+	public abstract String AddTemplate();
+
 	public boolean cutFirst(String videoKey, String picKey) throws AcsException
 	{
 		if (StringUtils.isEmpty(defaultPipelineId))
@@ -54,16 +56,16 @@ public abstract class AcsClient
 
 	public abstract boolean cutFirst(String pipelineId, String bucketName, String videoKey, String picKey);
 
-	public boolean amr2mp3(String amrKey, String mp3Key) throws AcsException
+	public boolean amr2mp3(String amrKey, String mp3Key, String templeteId) throws AcsException
 	{
 		if (StringUtils.isEmpty(defaultPipelineId))
 			throw new AcsException("请调用AcsClient.register时增加pipeline参数");
 		if (StringUtils.isEmpty(defaultBucket))
 			throw new AcsException("请调用AcsClient.register时增加bucket参数");
-		return amr2mp3(defaultPipelineId, defaultBucket, amrKey, mp3Key);
+		return amr2mp3(defaultPipelineId, defaultBucket, amrKey, mp3Key, templeteId);
 	}
 
-	public abstract boolean amr2mp3(String pipelineId, String bucketName, String amrKey, String mp3Key);
+	public abstract boolean amr2mp3(String pipelineId, String bucketName, String amrKey, String mp3Key, String templeteId);
 
 	public abstract boolean sendSms(String signName, String mobile, String templateCode, String templateParam);
 

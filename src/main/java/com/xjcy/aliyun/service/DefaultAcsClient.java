@@ -20,7 +20,7 @@ public class DefaultAcsClient extends AcsClient
 
 	private static final String JSON_INPUT = "{\"Bucket\":\"%s\",\"Location\":\"oss-cn-beijing\",\"Object\":\"%s\"}";
 	private static final String JSON_CONFIG = "{\"OutputFile\":{\"Bucket\":\"%s\",\"Location\":\"oss-cn-beijing\",\"Object\":\"%s\"},\"Time\":\"5\"}";
-	private static final String JSON_OUTPUTS = "[{\"OutputObject\":\"%s\",\"TemplateId\":\"052d137e64476ff1bc208955b757327e\"}]";
+	private static final String JSON_OUTPUTS = "[{\"OutputObject\":\"%s\",\"TemplateId\":\"%s\"}]";
 
 	public DefaultAcsClient(String accessKeyId, String secretAccessKey, String bucket, String pipeline)
 	{
@@ -68,7 +68,7 @@ public class DefaultAcsClient extends AcsClient
 	}
 
 	@Override
-	public boolean amr2mp3(String pipelineId, String bucketName, String amrKey, String mp3Key)
+	public boolean amr2mp3(String pipelineId, String bucketName, String amrKey, String mp3Key, String templeteId)
 	{
 		// 加入请求公共参数
 		Map<String, String> parameterMap = getCommonPara("SubmitJobs");
@@ -77,7 +77,7 @@ public class DefaultAcsClient extends AcsClient
 		parameterMap.put("OutputLocation", "oss-cn-beijing");
 		parameterMap.put("PipelineId", pipelineId);
 		parameterMap.put("Input", String.format(JSON_INPUT, bucketName, amrKey));
-		parameterMap.put("Outputs", String.format(JSON_OUTPUTS, mp3Key));
+		parameterMap.put("Outputs", String.format(JSON_OUTPUTS, mp3Key, templeteId));
 
 		String requestURL = signRequest(parameterMap, URL_MTS);
 		String json = WebClient.downloadString(requestURL);
@@ -96,6 +96,19 @@ public class DefaultAcsClient extends AcsClient
 		// 加入方法特有参数
 		parameterMap.put("State", "All");
 
+		String requestURL = signRequest(parameterMap, URL_MTS);
+		return WebClient.downloadString(requestURL.toString());
+	}
+
+	@Override
+	public String AddTemplate()
+	{
+		// 加入请求公共参数
+		Map<String, String> parameterMap = getCommonPara("AddTemplate");
+		// 加入方法特有参数
+		parameterMap.put("Name", "aac2mp3");
+		parameterMap.put("Audio", "{\"Codec\":\"MP3\"}");
+		
 		String requestURL = signRequest(parameterMap, URL_MTS);
 		return WebClient.downloadString(requestURL.toString());
 	}
