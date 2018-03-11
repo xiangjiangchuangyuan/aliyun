@@ -75,14 +75,14 @@ public abstract class AcsClient
 
 	public abstract String queryRoles();
 	
-	public int queryMediaInfo(String videoKey)
+	public String queryMediaInfo(String videoKey)
 	{
 		if (StringUtils.isEmpty(defaultBucket))
 			throw new AcsException("请调用AcsClient.register时增加bucket参数");
 		return queryMediaInfo(defaultBucket, videoKey);
 	}
 	
-	public abstract int queryMediaInfo(String bucketName, String videoKey);
+	public abstract String queryMediaInfo(String bucketName, String videoKey);
 
 	protected Map<String, String> getCommonPara(String action)
 	{

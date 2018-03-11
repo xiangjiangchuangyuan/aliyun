@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.xjcy.aliyun.AcsClient;
-import com.xjcy.util.JSONUtils;
 import com.xjcy.util.StringUtils;
 import com.xjcy.util.http.WebClient;
 
@@ -50,7 +49,7 @@ public class DefaultAcsClient extends AcsClient
 	}
 
 	@Override
-	public int queryMediaInfo(String bucketName, String videoKey)
+	public String queryMediaInfo(String bucketName, String videoKey)
 	{
 		// 加入请求公共参数
 		Map<String, String> parameterMap = getCommonPara("SubmitMediaInfoJob");
@@ -61,10 +60,7 @@ public class DefaultAcsClient extends AcsClient
 		String json = WebClient.downloadString(requestURL);
 		if (logger.isDebugEnabled())
 			logger.debug("CutFirst result=>" + json);
-		String duration = JSONUtils.getString(json, "Duration", true);
-		if (StringUtils.isEmpty(duration))
-			return 0;
-		return (int)Math.floor(Double.parseDouble(duration));
+		return json;
 	}
 
 	@Override
