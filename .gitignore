@@ -22,4 +22,5 @@
 hs_err_pid*
 .classpath
 /target/
-target/classes/META-INF/maven/com.xjcy/aliyun/pom.properties
+.project
+.settings
