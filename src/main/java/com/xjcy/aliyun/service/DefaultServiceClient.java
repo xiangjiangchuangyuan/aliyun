@@ -15,14 +15,13 @@ import com.xjcy.aliyun.OSSException;
 import com.xjcy.aliyun.event.PutObjectListener;
 import com.xjcy.aliyun.utils.Mimetypes;
 import com.xjcy.aliyun.utils.OSSUtils;
+import com.xjcy.util.STR;
 
 public class DefaultServiceClient extends ServiceClient
 {
 	private static final Logger logger = Logger.getLogger(DefaultServiceClient.class);
 
 	private static final String endpoint = "http://%s.oss-cn-beijing.aliyuncs.com";
-	private static final String HEADER_DATE = "Date";
-	private static final String HEADER_CONTENT_TYPE = "Content-Type";
 
 	public DefaultServiceClient(String accessKeyId, String secretAccessKey)
 	{
@@ -48,8 +47,8 @@ public class DefaultServiceClient extends ServiceClient
 			throws OSSException
 	{
 		Map<String, String> headers = new HashMap<>();
-		headers.put(HEADER_DATE, OSSUtils.formatRfc822Date(new Date()));
-		headers.put(HEADER_CONTENT_TYPE, Mimetypes.getInstance().getMimetype(key));
+		headers.put(STR.HEADER_DATE, OSSUtils.formatRfc822Date(new Date()));
+		headers.put(STR.HEADER_CONTENT_TYPE, Mimetypes.getInstance().getMimetype(key));
 		String resourcePath = "/" + bucketName + "/" + key;
 		if (sign(resourcePath, headers))
 		{

@@ -39,7 +39,7 @@ public class Mimetypes
 	private static final Logger logger = Logger.getLogger(Mimetypes.class);
 
 	/* The default MIME type */
-	public static final String DEFAULT_MIMETYPE = "application/octet-stream";
+	static final String DEFAULT_MIMETYPE = "application/octet-stream";
 
 	private static Mimetypes mimetypes = null;
 
